@@ -7,7 +7,6 @@ services:
   node:
     user: ${USER}
     image: y09/node
-    build: ./node
     volumes:
       - ./mnt:/mnt
     ports:
