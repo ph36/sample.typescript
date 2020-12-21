@@ -23,7 +23,7 @@ sudo docker-compose exec --user ${UID} node tsc --version
 ```sh
 sudo docker-compose exec --user ${UID} node /bin/sh
 tsc --init
-# -> outDir etc. を指定
+# -> target, outDir etc. を指定
 ```
 
 Usage
@@ -33,7 +33,7 @@ Usage
 
 ```sh
 sudo docker-compose exec --user ${UID} node /bin/sh
-tsc --outDir out hello.ts && node out/hello.js
+tsc && node out/hello.js
 	hello
 ```
 
