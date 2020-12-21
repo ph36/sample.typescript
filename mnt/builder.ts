@@ -32,11 +32,10 @@ class RequestBuilder {
   }
 
   public send() {
-    // 実際の send 処理は省略
     console.log("")
-    console.log("uri:", this.uri)
-    console.log("method:", this.method)
-    console.log("data:", this.data)
+    console.log(this)
+
+    // 実際の send 処理は省略
   }
 }
 
@@ -70,6 +69,7 @@ class ExpandedRequestBuilder {
   //   return this
   // }
 
+  // ref. https://log.pocka.io/ja/posts/typescript-builtin-type-functions/#pick
   public setURI(uri: string): this & Pick<BuildableRequest, 'uri'> {
     // ref. https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/Object/assign
     return Object.assign(this, { uri })
@@ -83,20 +83,21 @@ class ExpandedRequestBuilder {
     return Object.assign(this, { data })
   }
 
+  // ここの引数名は this でないといけない
+  // this だとチェーンで省略可能っぽいな
   public send(this: BuildableRequest) {
-    // 実際の send 処理は省略
     console.log("")
-    console.log("uri:", this.uri)
-    console.log("method:", this.method)
-    console.log("data:", this.data)
+    console.log(this)
+
+    // 実際の send 処理は省略
   }
 }
 
 // 想定の使用
 new ExpandedRequestBuilder()
-  .setURI("https://localhost/")
-  .setMethod("post")
-  .setData({ foo: "bar" })
+  .setURI("https://0.0.0.0/")
+  .setMethod("get")
+  .setData({ foo: "piyo" })
   .send()
 
 // 想定外の使用 -> エラー
