@@ -102,4 +102,4 @@ new ExpandedRequestBuilder()
 
 // 想定外の使用 -> エラー
 // -> setXXX() での設定前の send() の呼び出しをコンパイルエラーで検出可能に
-new ExpandedRequestBuilder().send()
+// new ExpandedRequestBuilder().send()
