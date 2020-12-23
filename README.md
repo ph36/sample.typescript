@@ -33,7 +33,7 @@ Usage
 
 ```sh
 sudo docker-compose exec --user ${UID} node /bin/sh
-tsc && node out/hello.js
+./run hello.ts
 	hello
 ```
 
