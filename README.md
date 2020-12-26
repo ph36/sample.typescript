@@ -37,5 +37,12 @@ sudo docker-compose exec --user ${UID} node /bin/sh
 	hello
 ```
 
+パッケージの追加
+
+```sh
+cd mnt/work
+yarn add @types/node
+```
+
 Learned
 --------

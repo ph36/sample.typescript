@@ -20,27 +20,33 @@ function readFilePromise(path: string): Promise<string> {
       else {
         resolve(result)
       }
-    }
-  }
+    })
+  })
 }
 
 // Promise に渡すエグゼキュータ
-type Executor<T, E extends Error> = (
+type Executor<T> = (
   // 処理の成功
   resolve: (result: T) => void,
   // 処理の失敗
-  reject: (erorr: E) => void,
+  reject: (erorr: unknown) => void,
 ) => void
 
-class Promise<T, E extends Error>
+class Promise<T>
 {
-  constructor(f: Executor<T, E>) {}
+  constructor(f: Executor<T>) {}
 
-  then<U, F extends Error>(g: (result: T) => Promise<U, F> | U): Promise<U, F>
-  cache<U, F extends Error>(g: (error: E) => Promise<U, F> | U): Promise<U, F>
+  /*
+   * Promise を直列に並べるための機構
+   */
+
+  // 成功した Promise の結果を新しい Promise にマップ
+  then<U>(g: (result: T) => Promise<U> | U): Promise<U>
+  // エラーを新しい Promise にマップ
+  cache<U>(g: (error: unknown) => Promise<U> | U): Promise<U>
 }
 
-// function appendAndReadPromise(path: string, data: staring): Promise<string> 
+// function appendAndReadPromise(path: string, data: staring): Promise<string>
 // {
 //   return appendPromise(path, data)
 //     .then(() => readPromise(path))

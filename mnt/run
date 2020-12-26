@@ -1,25 +1,23 @@
 #!/bin/sh
 
-# e.g. `./build async.ts`
+# e.g. `./run async.ts`
 
 function setup
 {
-  [ -d "${WORK_DIR}" ] && rm -r "${WORK_DIR}" || :
+  [ -d "${WORK_DIR}" ] && rm -f ${WORK_DIR}/*.ts || :
 }
 
 function teardown
 {
-  echo "teardown" >&2
-
   cd "${ROOT_DIR}"
-  rm -r ${WORK_DIR}
+  rm -f ${WORK_DIR}/*.ts
   exit
 }
 
 function main
 {
   mkdir -p "${WORK_DIR}"
-  cp -f "${TARGET}" tsconfig.json "${WORK_DIR}"
+  cp -f "${TARGET}" "${WORK_DIR}"
   cd "${WORK_DIR}"
   tsc
   node out/${TARGET%.ts}.js
@@ -31,8 +29,8 @@ ROOT_DIR="$(cd ${0%/*} && pwd)"
 TARGET="$1"
 WORK_DIR=./work
 
-# trap teardown SIGINT SIGHUP SIGKILL
+trap teardown SIGINT SIGHUP SIGKILL
 
 setup
 main
-# teardown
+teardown
